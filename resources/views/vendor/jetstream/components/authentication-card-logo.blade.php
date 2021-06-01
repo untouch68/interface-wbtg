@@ -1,0 +1,2 @@
+{{-- <img src="https://wallboxtogo.de/wallboxtogo/wp-content/themes/efuel/assets/images/logo.png" alt="" style="width:128px;"> --}}
+<img src="{{ asset('/images/logo.png') }}" alt="" style="width:150px;">
