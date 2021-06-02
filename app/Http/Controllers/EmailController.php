@@ -27,14 +27,14 @@ class EmailController extends Controller
         // $pile_sn = Auth::user()->pile_sn;
         $userId = Auth::user()->id;
         $name = Auth::user()->name;
-        $desired_kw = $request->kw;
+        $desired_kw = $request->input_kw;
 
         $data = array(
             'name' => $name,
             'kw' => $desired_kw,
             'pile_sn' => $request->pile_sn
         );
-
+        // dd($request);
         DB::update('update users set desired_kw = ?, has_pending_request_for_kw = ? where id = ?', [$desired_kw, '1', $userId]);
 
         Mail::to('aenderungen.wallboxtogo@mal-electronics.com')->send(new sendingEmail($data));

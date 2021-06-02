@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\sendingEmail;
 use App\Mail\sendingEmailDatasheet;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;

@@ -7,6 +7,7 @@ use NunoMaduro\Collision\Contracts\Provider;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',function(){
+    return view('auth.login');
+})->middleware(['auth']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){

@@ -74,10 +74,50 @@
                                                         Keine Anfrage
                                                     </span>
                                                 @else
-                                                    <button
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold hover:bg-red-300 rounded-full bg-red-100 text-red-800">
-                                                        Anfrage offen
-                                                    </button>
+                                                    <div class="text-left" x-data="{ show: false }">
+                                                        <button @click={show=true} type="button"
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold hover:bg-red-300 rounded-full bg-red-100 text-red-800">Anfrage
+                                                            offen</button>
+                                                        <div x-show="show" tabindex="0"
+                                                            class="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed">
+                                                            <div @click.away="show = false"
+                                                                class="z-50 relative p-3 mx-auto my-0 max-w-full"
+                                                                style="width: 600px;">
+                                                                <div
+                                                                    class="bg-white rounded shadow-lg border flex flex-col overflow-hidden">
+                                                                    <button @click={show=false}
+                                                                        class="fill-current h-6 w-6 absolute right-0 top-0 m-6 font-3xl font-bold">&times;</button>
+                                                                    <div class="px-6 py-3 text-xl border-b font-bold">
+                                                                        Anfrage bearbeitet?</div>
+                                                                    <div class="p-6 flex-grow">
+                                                                        <p>Bitte bestätigen</p>
+                                                                    </div>
+                                                                    <div class="px-6 py-3 border-t">
+                                                                        <div class="flex justify-end">
+                                                                            <button @click={show=false} type="button"
+                                                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Abbrechen</Button>
+                                                                            <button
+                                                                                class="bg-green-500 hover:bg-green-700 text-gray-100 font-bold rounded px-4 py-2 ml-1"
+                                                                                type="button"
+                                                                                onClick="event.preventDefault();document.getElementById('request-complete-form-{{ $user->id }}').submit()">
+                                                                                Bearbeitet
+                                                                            </button>
+                                                                            <form
+                                                                                id="request-complete-form-{{ $user->id }}"
+                                                                                action="{{ route('users.update', $user->id) }}"
+                                                                                method="POST" style="display:none;">
+                                                                                @csrf
+                                                                                @method("PUT")
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-black opacity-50">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="ml-1 text-xs text-gray-500">Wunsch-KW:
                                                         {{ $user->desired_kw }}</div>
                                                 @endif
@@ -101,8 +141,11 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="text-left" x-data="{ show: false }">
-                                                    <button @click={show=true} type="button"
-                                                        class="text-red-600 hover:text-red-900">Löschen</button>
+                                                    @if ($user->is_admin != 1)
+
+                                                        <button @click={show=true} type="button"
+                                                            class="text-red-600 hover:text-red-900">Löschen</button>
+                                                    @endif
                                                     <div x-show="show" tabindex="0"
                                                         class="z-40 overflow-auto left-0 top-0 bottom-0 right-0 w-full h-full fixed">
                                                         <div @click.away="show = false"
@@ -122,7 +165,7 @@
                                                                         <button @click={show=false} type="button"
                                                                             class="bg-green-500 text-gray-100 rounded px-4 py-2 mr-1">Abbrechen</Button>
                                                                         <button
-                                                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded"
                                                                             type="button"
                                                                             onClick="event.preventDefault();document.getElementById('delete-user-form-{{ $user->id }}').submit()">
                                                                             Löschen
